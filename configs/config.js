@@ -9,7 +9,7 @@ module.exports = {
   },
   cors: {
     origin: process.env.ALLOWED_ORIGINS?.split(', ') || [
-      'http://localhost:3000',
+      'http://localhost:5173',
     ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
@@ -33,12 +33,15 @@ module.exports = {
     key: process.env.ENCRYPTION_KEY,
   },
   rateLimit: {
-    windowMs: 15 * 60 * 1000,
+    windowMs: 15 * 60 * 1000, // 15 minutes
     generalAPILimit: 100,
     authAPILimit: 5,
     transactionAPILimit: 10,
     cardAPILimit: 20,
     sessionAPILimit: 10,
     managementAPILimit: 50,
+  },
+  session: {
+    expirationTime: 5 * 60 * 1000, // 5 minutes
   },
 };

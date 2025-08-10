@@ -6,11 +6,13 @@ const sessionSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Card',
       required: true,
+      index: true,
     },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
       required: true,
+      index: true,
     },
     startTime: {
       type: Date,
@@ -18,6 +20,7 @@ const sessionSchema = new mongoose.Schema(
     },
     endTime: {
       type: Date,
+      index: { expireAfterSeconds: 0 },
     },
     isActive: {
       type: Boolean,

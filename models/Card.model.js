@@ -8,6 +8,7 @@ const cardSchema = new mongoose.Schema(
       trim: true,
       unique: true,
       match: /^\d{16}$/,
+      index: true,
     },
     cardInfo: {
       cardType: {
@@ -55,9 +56,11 @@ const cardSchema = new mongoose.Schema(
         ref: 'Account',
         required: true,
       },
-      linkedAccounts: [
-        { type: mongoose.Schema.Types.ObjectId, ref: 'Account' },
-      ],
+      linkedAccountId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Account',
+        required: true,
+      },
     },
   },
   {

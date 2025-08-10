@@ -1,0 +1,34 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "server.js",
+  "license": "MIT",
+  "author": "Binaya Chaudhary <binayachaudhary@live.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/binayachaudari/tr-assessment-backend"
+  },
+  "bugs": {
+    "url": "https://github.com/binayachaudari/tr-assessment-backend/issues"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon --watch server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "compression": "^1.8.1",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.0.1",
+    "express-validator": "^7.2.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.17.1",
+    "validator": "^13.15.15"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10",
+    "prettier": "^3.6.2"
+  }
+}

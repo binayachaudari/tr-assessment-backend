@@ -3,8 +3,13 @@ const config = require('./configs/config');
 const helmet = require('helmet');
 const compression = require('compression');
 const cors = require('cors');
+const connectDb = require('./db');
 const app = express();
 
+// Connect to MongoDB
+connectDb();
+
+// Middleware
 // Body parsing with size limits
 app.use(
   express.json({

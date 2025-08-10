@@ -4,8 +4,6 @@ const logger = require('./utils/logger');
 
 const connectDb = async () => {
   mongoose.connect(config.database.url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
     retryWrites: true,
     writeConcern: 'majority',
   });

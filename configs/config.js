@@ -22,7 +22,23 @@ module.exports = {
     maxAge: 86400, // 24 hours
   },
   jwt: {
-    secret: env.JWT_SECRET,
+    secret: process.env.JWT_SECRET,
     expiresIn: '5m',
+    algorithm: 'HS256',
+    issuer: 'ATM_SYSTEM',
+    audience: 'ATM_CLIENT',
+  },
+  encryption: {
+    algorithm: 'aes-256-gcm',
+    key: process.env.ENCRYPTION_KEY,
+  },
+  rateLimit: {
+    windowMs: 15 * 60 * 1000,
+    generalAPILimit: 100,
+    authAPILimit: 5,
+    transactionAPILimit: 10,
+    cardAPILimit: 20,
+    sessionAPILimit: 10,
+    managementAPILimit: 50,
   },
 };

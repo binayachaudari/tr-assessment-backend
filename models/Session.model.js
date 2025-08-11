@@ -20,6 +20,7 @@ const sessionSchema = new mongoose.Schema(
     },
     endTime: {
       type: Date,
+      index: { expireAfterSeconds: 0 },
     },
     isActive: {
       type: Boolean,

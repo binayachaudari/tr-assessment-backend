@@ -8,8 +8,8 @@ module.exports = {
     url: process.env.MONGODB_URI,
   },
   cors: {
-    origin: process.env.ALLOWED_ORIGINS?.split(', ') || [
-      'http://localhost:3000',
+    origin: process.env.ALLOWED_ORIGINS?.split(',') || [
+      'http://localhost:5173',
     ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
@@ -22,7 +22,27 @@ module.exports = {
     maxAge: 86400, // 24 hours
   },
   jwt: {
-    secret: env.JWT_SECRET,
+    secret: process.env.JWT_SECRET,
     expiresIn: '5m',
+    algorithm: 'HS256',
+    issuer: 'ATM_SYSTEM',
+    audience: 'ATM_CLIENT',
+  },
+  rateLimit: {
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    generalAPILimit: 100,
+    authAPILimit: 5,
+    transactionAPILimit: 10,
+    cardAPILimit: 20,
+    sessionAPILimit: 15,
+    managementAPILimit: 50,
+  },
+  session: {
+    expirationTime: 5 * 60 * 1000, // 5 minutes
+  },
+  transactionLimits: {
+    withdrawalLimit: 20000,
+    transactionLimit: 100000,
+    perTransactionLimit: 2000,
   },
 };

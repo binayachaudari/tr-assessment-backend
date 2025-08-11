@@ -8,7 +8,7 @@ module.exports = {
     url: process.env.MONGODB_URI,
   },
   cors: {
-    origin: process.env.ALLOWED_ORIGINS?.split(', ') || [
+    origin: process.env.ALLOWED_ORIGINS?.split(',') || [
       'http://localhost:5173',
     ],
     credentials: true,

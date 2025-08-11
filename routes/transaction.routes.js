@@ -28,12 +28,10 @@ router.post(
 );
 
 // POST /api/transactions/balance - ATM Balance Inquiry
-router.post(
+router.get(
   '/balance',
   transactionLimiter,
   authenticateSession,
-  transactionValidators.checkBalance,
-  handleValidationErrors,
   TransactionController.checkBalance,
 );
 

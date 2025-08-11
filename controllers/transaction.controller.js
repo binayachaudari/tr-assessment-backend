@@ -5,19 +5,12 @@ const httpCodes = require('../constants/httpCodes');
 class TransactionController {
   static async withdraw(req, res, next) {
     try {
-      const { cardId, accountId, amount } = req.body;
-
-      // Validate inputs
-      if (!cardId || !accountId || !amount || amount <= 0) {
-        return res.status(httpCodes.BAD_REQUEST).json({
-          success: false,
-          message: 'Card ID, account ID, and valid amount are required',
-        });
-      }
+      const { amount } = req.body;
+      const { card } = req;
 
       const result = await ATMService.processWithdrawal(
-        cardId,
-        accountId,
+        card._id,
+        card.associations.linkedAccountId,
         amount,
       );
 
@@ -28,36 +21,20 @@ class TransactionController {
       });
     } catch (error) {
       logger.error('Withdrawal error:', error);
-
-      let statusCode = httpCodes.INTERNAL_ERROR;
-      if (error.message.includes('Insufficient funds')) {
-        statusCode = httpCodes.BAD_REQUEST;
-      } else if (error.message.includes('limit exceeded')) {
-        statusCode = httpCodes.FORBIDDEN;
-      } else if (error.message.includes('not found')) {
-        statusCode = httpCodes.NOT_FOUND;
-      }
-
-      res.status(statusCode).json({
-        success: false,
-        message: error.message,
-      });
+      next(error);
     }
   }
 
   static async deposit(req, res, next) {
     try {
-      const { cardId, accountId, amount } = req.body;
+      const { amount } = req.body;
+      const { card } = req;
 
-      // Validate inputs
-      if (!cardId || !accountId || !amount || amount <= 0) {
-        return res.status(httpCodes.BAD_REQUEST).json({
-          success: false,
-          message: 'Card ID, account ID, and valid amount are required',
-        });
-      }
-
-      const result = await ATMService.processDeposit(cardId, accountId, amount);
+      const result = await ATMService.processDeposit(
+        card._id,
+        card.associations.linkedAccountId,
+        amount,
+      );
 
       res.status(httpCodes.OK).json({
         success: true,
@@ -67,31 +44,25 @@ class TransactionController {
     } catch (error) {
       logger.error('Deposit error:', error);
 
-      let statusCode = httpCodes.INTERNAL_ERROR;
-      if (error.message.includes('not found')) {
-        statusCode = httpCodes.NOT_FOUND;
-      }
-
-      res.status(statusCode).json({
-        success: false,
-        message: error.message,
-      });
+      next(error);
     }
   }
 
   static async checkBalance(req, res, next) {
     try {
-      const { cardId, accountId } = req.body;
+      const { card } = req;
 
-      // Validate inputs
-      if (!cardId || !accountId) {
-        return res.status(httpCodes.BAD_REQUEST).json({
+      if (!card) {
+        return res.status(httpCodes.NOT_FOUND).json({
           success: false,
-          message: 'Card ID and account ID are required',
+          message: 'Card not found',
         });
       }
 
-      const result = await ATMService.getAccountBalance(cardId, accountId);
+      const result = await ATMService.getAccountBalance(
+        card._id,
+        card.associations.linkedAccountId,
+      );
 
       res.status(httpCodes.OK).json({
         success: true,
@@ -105,18 +76,7 @@ class TransactionController {
       });
     } catch (error) {
       logger.error('Balance inquiry error:', error);
-
-      let statusCode = httpCodes.INTERNAL_ERROR;
-      if (error.message.includes('not found')) {
-        statusCode = httpCodes.NOT_FOUND;
-      } else if (error.message.includes('not linked')) {
-        statusCode = httpCodes.FORBIDDEN;
-      }
-
-      res.status(statusCode).json({
-        success: false,
-        message: error.message,
-      });
+      next(error);
     }
   }
 }

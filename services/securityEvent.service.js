@@ -2,6 +2,7 @@ const SecurityEventModel = require('../models/SecurityEvent.model');
 const CardModel = require('../models/Card.model');
 const EncryptionService = require('./encryption.service');
 const logger = require('../utils/logger');
+const config = require('../configs/config');
 
 // Security configuration constants
 const SECURITY_CONFIG = {
@@ -174,7 +175,7 @@ class SecurityService {
     }
 
     // Check per transaction limit
-    if (amount > card.limits.perTransactionLimit) {
+    if (amount > config.transactionLimits.perTransactionLimit) {
       return { allowed: false, reason: 'EXCEEDS_PER_TRANSACTION_LIMIT' };
     }
 
@@ -182,7 +183,7 @@ class SecurityService {
       // Check daily withdrawal limit
       if (
         card.usage.todaysWithdrawals + amount >
-        card.limits.dailyWithdrawalLimit
+        config.transactionLimits.withdrawalLimit
       ) {
         return { allowed: false, reason: 'EXCEEDS_DAILY_WITHDRAWAL_LIMIT' };
       }
@@ -191,7 +192,7 @@ class SecurityService {
     // Check daily transaction limit
     if (
       card.usage.todaysTransactions + amount >
-      card.limits.dailyTransactionLimit
+      config.transactionLimits.transactionLimit
     ) {
       return { allowed: false, reason: 'EXCEEDS_DAILY_TRANSACTION_LIMIT' };
     }

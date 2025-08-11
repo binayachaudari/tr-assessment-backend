@@ -11,7 +11,10 @@ const errorHandler = (err, req, res, next) => {
     status: HTTP_STATUS.INTERNAL_ERROR,
     timestamp: new Date().toISOString(),
   });
-  res.status(HTTP_STATUS.INTERNAL_ERROR).send('Something went wrong');
+  res.status(HTTP_STATUS.INTERNAL_ERROR).json({
+    success: false,
+    message: 'Something went wrong',
+  });
 };
 
 module.exports = errorHandler;

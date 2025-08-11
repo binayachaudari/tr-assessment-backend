@@ -44,4 +44,9 @@ module.exports = {
   session: {
     expirationTime: 5 * 60 * 1000, // 5 minutes
   },
+  transactionLimits: {
+    withdrawalLimit: 20000,
+    transactionLimit: 100000,
+    perTransactionLimit: 2000,
+  },
 };

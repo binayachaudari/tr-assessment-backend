@@ -6,7 +6,7 @@ const generalLimiter = rateLimit({
   max: config.rateLimit.generalAPILimit,
   message: {
     success: false,
-    message: 'Too many requests from this IP, please try again later',
+    message: 'Too many requests, please try again later',
     retryAfter: `${Math.ceil(config.rateLimit.windowMs / 1000)} seconds`,
   },
   standardHeaders: true,

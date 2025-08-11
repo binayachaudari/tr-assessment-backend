@@ -13,7 +13,7 @@ const errorHandler = (err, req, res, next) => {
   });
   res.status(HTTP_STATUS.INTERNAL_ERROR).json({
     success: false,
-    message: 'Something went wrong',
+    message: err.message || 'Something went wrong',
   });
 };
 

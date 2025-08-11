@@ -28,17 +28,13 @@ module.exports = {
     issuer: 'ATM_SYSTEM',
     audience: 'ATM_CLIENT',
   },
-  encryption: {
-    algorithm: 'aes-256-gcm',
-    key: process.env.ENCRYPTION_KEY,
-  },
   rateLimit: {
     windowMs: 15 * 60 * 1000, // 15 minutes
     generalAPILimit: 100,
     authAPILimit: 5,
     transactionAPILimit: 10,
     cardAPILimit: 20,
-    sessionAPILimit: 10,
+    sessionAPILimit: 15,
     managementAPILimit: 50,
   },
   session: {

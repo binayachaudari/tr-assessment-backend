@@ -28,11 +28,6 @@ router.post(
 );
 
 // POST /api/transactions/balance - ATM Balance Inquiry
-router.get(
-  '/balance',
-  transactionLimiter,
-  authenticateSession,
-  TransactionController.checkBalance,
-);
+router.get('/balance', authenticateSession, TransactionController.checkBalance);
 
 module.exports = router;

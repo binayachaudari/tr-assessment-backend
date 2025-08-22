@@ -190,6 +190,15 @@ class ATMService {
       throw error;
     }
   }
+
+  static async getRecentTransactions(cardId) {
+    try {
+      return Transaction.find({ cardId }).sort({ createdAt: -1 }).limit(5);
+    } catch (error) {
+      logger.error('Error getting recent transactions', error);
+      throw error;
+    }
+  }
 }
 
 module.exports = ATMService;

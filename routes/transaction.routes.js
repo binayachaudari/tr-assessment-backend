@@ -27,6 +27,12 @@ router.post(
   TransactionController.deposit,
 );
 
+router.get(
+  '/recent',
+  authenticateSession,
+  TransactionController.showRecentTransaction,
+);
+
 // POST /api/transactions/balance - ATM Balance Inquiry
 router.get('/balance', authenticateSession, TransactionController.checkBalance);
 

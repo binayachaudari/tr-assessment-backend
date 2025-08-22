@@ -79,6 +79,20 @@ class TransactionController {
       next(error);
     }
   }
+
+  static async showRecentTransaction(req, res, next) {
+    try {
+      const { card } = req;
+      const result = await ATMService.getRecentTransactions(card._id);
+      return res.status(httpCodes.OK).json({
+        success: true,
+        message: 'success',
+        data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = TransactionController;
